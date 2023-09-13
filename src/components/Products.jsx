@@ -4,32 +4,8 @@ import { useDispatch } from "react-redux"
 import { addCart } from "../redux/action"
 import Skeleton from "react-loading-skeleton"
 import "react-loading-skeleton/dist/skeleton.css"
-import weddingDress from '../assets/wedding-dress.jpg'
-import weddingRings from '../assets/rings.jpeg'
 import { Link, useNavigate  } from "react-router-dom"
 import { stripe } from '../lib/stripe.ts'
-
-
-const mockProducts = [
-  {
-    id: 1,
-    title: "Elegante Vestido de Noiva com Renda",
-    price: 999.99,
-    description: "Um vestido de noiva deslumbrante com detalhes em renda e um design elegante. Perfeito para o seu grande dia.",
-    category:"men's clothing",
-    image: weddingDress,
-    rating: { rate: 4.9, count: 150 }
-  },
-  {
-    id: 2,
-    title: "Conjunto de Alianças de Casamento em Ouro Branco",
-    price: 799.99,
-    description: "Um conjunto de alianças de casamento em ouro branco de alta qualidade. O símbolo perfeito do seu amor eterno.",
-    category: "casamento",
-    image: weddingRings,
-    rating: { rate: 4.8, count: 200 }
-  }
-]
 
 export default function Products() {
 
@@ -42,16 +18,6 @@ export default function Products() {
   const addProduct = (product) => {
     dispatch(addCart(product))
   }
-
-  useEffect(() => {
-    const getProducts = () => {
-      setLoading(true)
-      setData(mockProducts)
-      setFilter(mockProducts)
-      setLoading(false)
-    }
-    getProducts()
-  }, [])
 
   useEffect(() => {
     async function fetchProducts() {

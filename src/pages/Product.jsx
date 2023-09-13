@@ -4,86 +4,61 @@ import { useDispatch } from "react-redux"
 import { addCart } from "../redux/action"
 import { Footer, Navbar } from "../components"
 import { Link, useParams } from "react-router-dom"
+import { stripe } from '../lib/stripe.ts'
+
 
 export default function Product() {
 
-  const { id } = useParams();
-  const [product, setProduct] = useState([]);
-  const dispatch = useDispatch();
-
-  const YOUR_STRIPE_SECRET_KEY = '';
-  const PRODUCT_ID = id
-
-  function fetchProduct(productId) {
-    return fetch(`https://api.stripe.com/v1/products/${productId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${YOUR_STRIPE_SECRET_KEY}`,
-      },
-    })
-    .then(response => response.json());
-  }
-
-  function fetchPrice(priceId) {
-    return fetch(`https://api.stripe.com/v1/prices/${priceId}`, {
-      method: 'GET',
-      headers: {
-        'Authorization': `Bearer ${YOUR_STRIPE_SECRET_KEY}`,
-      },
-    })
-    .then(response => response.json());
-  }
-
-  function formatCurrency(price) {
-    return new Intl.NumberFormat('pt-BR', {
-      style: 'currency',
-      currency: 'BRL'
-    }).format(price / 100);
-  }
+  const { id } = useParams()
+  const [product, setProduct] = useState({})
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    async function getProduct() {
+    async function fetchProductbyId() {
       try {
-        const productData = await fetchProduct(PRODUCT_ID);
-        const priceData = await fetchPrice(productData.default_price);
-        setProduct({
-          id: productData.id,
-          name: productData.name,
-          description: productData.description,
-          category: productData.metadata.category,
-          imageUrl: productData.images[0],
-          price: formatCurrency(priceData.unit_amount),
-        });
+        const response = await stripe.products.retrieve(id, {
+          expand: ['default_price']
+        })
+          const price = response.default_price
+          const productData = {
+            id: response.id,
+            name: response.name,
+            description: response.description,
+            imageUrl: response.images,
+            category: response.category || null,
+            price: new Intl.NumberFormat('pt-BR', {
+              style: 'currency',
+              currency: 'BRL'
+            }).format(price.unit_amount / 100)
+          }
+          setProduct(productData)
       } catch (error) {
-        console.error("Error fetching product:", error);
+        console.error("Error fetching products:", error)
       }
     }
-
-    getProduct();
-  }, []);
+    fetchProductbyId()
+  }, [id])
 
   const addProduct = (product) => {
-    dispatch(addCart(product));
-
-  };
+    dispatch(addCart(product))
+  }
 
   return (
     <>
       <Navbar />
       <div className="container">
         <div className="row">
-
-        <div className="container my-5 py-2">
-        <div className="row">
-          <div className="col-md-6 col-sm-12 py-3">
-            <img
-              className="img-fluid"
-              src={product.imageUrl}
-              key={product.id} 
-              alt={product.title}
-              width="400px"
-              height="400px"
-            />
+          <div className="container my-5 py-2">
+            <div className="row">
+              <div className="col-md-6 col-sm-12 py-3">
+                <img
+                  className="img-fluid"
+                  src={product.imageUrl}
+                  key={product.id} 
+                  alt={product.title}
+                  width="400px"
+                  height="400px"
+                />
           </div>
           <div className="col-md-6 col-md-6 py-5">
             <h4 className="text-uppercase text-muted">{product.category}</h4>
@@ -106,5 +81,5 @@ export default function Product() {
       </div>
       <Footer />
     </>
-  );  
+  )
 }
