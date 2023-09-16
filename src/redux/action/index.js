@@ -1,15 +1,17 @@
-// For Add Item to Cart
-export const addCart = (product) =>{
-    return {
-        type:"ADDITEM",
-        payload:product
-    }
-}
 
-// For Delete Item to Cart
-export const delCart = (product) =>{
+// src/redux/action/index.js
+
+export const addCart = (product) => {
     return {
-        type:"DELITEM",
-        payload:product
+      type: "ADDITEM",
+      payload: product
     }
+  }
+  
+export const delCart = (product) => {
+  return {
+    type: "DELITEM",
+    payload: product
+  }
 }
+  
