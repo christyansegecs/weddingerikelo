@@ -10,7 +10,7 @@ export default function Hero() {
           />
           <div className="card-img-overlay d-flex align-items-center">
             <div className="container">
-              <h5 className="card-title fs-1 text fw-lighter">Lorrayne & Eriks</h5>
+              <h5 className="card-title fs-1 text fw-lighter">Lorraine & Erik</h5>
               <p className="card-text fs-5 d-none d-sm-block ">
               Come to celebrate this happy marriage party with us. Your presence will be our greatest gift.
               </p>

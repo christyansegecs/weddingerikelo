@@ -1,5 +1,4 @@
 
-import { ReactNode } from 'react'
 import './globals.css'
 import { Poppins as Poppins, Roboto_Flex as Roboto } from 'next/font/google'
 
@@ -12,11 +11,7 @@ export const metadata = {
   description: 'React Website',
 }
 
-export default function RootLayout({
-  children,
-}: {
-  children: ReactNode
-}) {
+export default function RootLayout({children}) {
   return (
     <html lang="en">
       <body className={`${roboto.variable} ${poppins.variable} font-sans`}>{children}</body>

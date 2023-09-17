@@ -6,7 +6,6 @@ import { Link } from 'react-router-dom'
 import { stripe } from '../libs/stripe'
 
 export default function Products() {
-
   const [data, setData] = useState([])
   const [filter, setFilter] = useState([])
   const dispatch = useDispatch()

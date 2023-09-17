@@ -1,27 +1,30 @@
-import React, { useState } from 'react';
-import CartItem from './CartItem';
-import { handler } from '../app/api/route';
+
 import axios from 'axios'
+import { useState, useEffect } from 'react'
+import CartItem from './CartItem'
 
 export default function CartContent({ state, addItem, removeItem }) {
   
-  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false);
+  const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
 
-  const subtotal = state.reduce((total, item) => total + item.price * item.qty, 0);
-  const totalItems = state.reduce((total, item) => total + item.qty, 0);
+  const subtotal = state.reduce((total, item) => total + item.price * item.qty, 0)
+  const totalItems = state.reduce((total, item) => total + item.qty, 0)
 
-  async function handleBuyButton() {
-    try {
-      setIsCreatingCheckoutSession(true);
-      const response = await handler()
-      const { checkoutUrl } = response.data;
-      window.location.href = checkoutUrl;
-    } catch (err) {
-      setIsCreatingCheckoutSession(false);
-      alert('Falha ao redirecionar ao checkout!');
-      console.log('Erro ao criar sessão de pagamento:', err);
+  const handleCheckout = async (e) => {
+    e.preventDefault()
+    setIsCreatingCheckoutSession(true)
+    const { data } = await axios.post('/api/checkout',
+    {
+      priceId: 'priceId'
+    },
+    {
+      headers: {
+        "Content-Type": "application/json",
+      }
     }
-  };
+    )
+    window.location.assign(data)
+  }
 
   return (
     <section className="h-100 gradient-custom">
@@ -58,7 +61,7 @@ export default function CartContent({ state, addItem, removeItem }) {
                     </span>
                   </li>
                 </ul>
-                <button disabled={isCreatingCheckoutSession} onClick={handleBuyButton}>
+                <button disabled={isCreatingCheckoutSession} onClick={handleCheckout}>
                   {isCreatingCheckoutSession ? 'Creating Checkout...' : 'Comprar agora'}
                 </button>
               </div>
@@ -67,5 +70,5 @@ export default function CartContent({ state, addItem, removeItem }) {
         </div>
       </div>
     </section>
-  );
+  )
 }

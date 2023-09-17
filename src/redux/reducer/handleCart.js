@@ -1,13 +1,6 @@
 
 // src/redux/reducer/handleCart.js
 
-export type CartItem = {
-    id: string
-    name: string
-    price: number
-    qty: number
-  }
-  
 const cart = []
 
 const handleCart = (state = cart, action) => {
