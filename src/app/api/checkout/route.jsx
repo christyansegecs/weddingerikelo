@@ -4,7 +4,7 @@ import { NextResponse, NextRequest } from 'next/server'
 
 export async function POST(request) {
 
-  const apiKey = process.env.API_KEY_STRIPE
+  const apiKey = process.env.STRIPE_KEY
   const stripe = new Stripe(apiKey)
 
     let data = await request.json();

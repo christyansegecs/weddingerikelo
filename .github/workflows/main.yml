@@ -1,36 +1,37 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: Node.js CI
+name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
 
 jobs:
-  build:
-
+  deploy:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [18.16]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
     steps:
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v2
       with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - run: npm ci
-    - run: npm install
-    - run: npm run build
-    
-    - name: deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        deploy_key: ${{ secrets.ACTIONS_DEPLOY_KEY }}
-        publish_dir: ./build
+        node-version: 20.5.1
+
+    - name: Install Dependencies
+      run: npm install
+
+    - name: Build Next.js Application
+      run: npm run build
+
+    - name: Deploy to GitHub Pages
+      run: |
+        git config --global user.name "${{ github.actor }}"
+        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+        git checkout gh-pages || git checkout --orphan gh-pages
+        git rm -rf .
+        mv -v build/* .
+        git add -A
+        git commit -m "Deploy to GitHub Pages"
+        git push --force --quiet "https://${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git" gh-pages:gh-pages
