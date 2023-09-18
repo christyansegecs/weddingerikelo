@@ -1,5 +1,5 @@
 /** @type {import('next').NextConfig} */
-const basePath = '/weddingerikelo'
+const basePath = '/weddingerikelo/'
 
 const nextConfig = {
   basePath: basePath,
