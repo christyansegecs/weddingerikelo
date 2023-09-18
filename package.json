@@ -1,7 +1,6 @@
 {
   "name": "Lorraine&Erik",
   "version": "0.1.0",
-  "homepage": "https://christyansegecs.github.io/weddingerikelo/",
   "private": true,
   "scripts": {
     "dev": "next dev -p 3002",
