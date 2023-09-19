@@ -1,7 +1,7 @@
 
 /** @type {import('next').NextConfig} */
 
-const basePath = '/dotalobbysquad'
+const basePath = '/weddingerikelo'
 
 const nextConfig = {
   basePath: basePath,
