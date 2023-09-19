@@ -3,7 +3,7 @@
  */
 const nextConfig = {
     output: 'export',
-    basePath: '/weddingerikelo'
+    basePath: 'https://github.com/christyansegecs/weddingerikelo'
   
   }
    
