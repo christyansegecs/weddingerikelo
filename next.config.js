@@ -1,10 +1,11 @@
-/**
-@type {import('next').NextConfig}
- */
+
+/** @type {import('next').NextConfig} */
+
+const basePath = '/dotalobbysquad'
+
 const nextConfig = {
-    output: 'export',
-    basePath: 'https://github.com/christyansegecs/weddingerikelo'
-  
-  }
-   
-  module.exports = nextConfig
+  basePath: basePath,
+  output: 'export',
+}
+
+module.exports = nextConfig
