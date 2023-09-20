@@ -8,7 +8,6 @@
     "start": "next start",
     "deploy": "gh-pages -d build",
     "lint": "next lint"
-    
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
