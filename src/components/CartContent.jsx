@@ -13,16 +13,13 @@ export default function CartContent({ state, addItem, removeItem }) {
   const handleCheckout = async (e) => {
     e.preventDefault()
     setIsCreatingCheckoutSession(true)
-    const { data } = await axios.post('/api/checkout',
-    {
-      priceId: 'priceId'
-    },
-    {
-      headers: {
-        "Content-Type": "application/json",
-      }
-    }
-    )
+    
+    const lineItems = state.map((item) => ({
+      price: item.priceId
+      quantity: item.qty
+    }))
+    
+    const { data } = await axios.post('/api/checkout', { lineItems })
     window.location.assign(data)
   }
 
