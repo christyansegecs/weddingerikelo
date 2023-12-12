@@ -7,7 +7,13 @@ export default function CartContent({ state, addItem, removeItem }) {
   
   const [isCreatingCheckoutSession, setIsCreatingCheckoutSession] = useState(false)
 
-  const subtotal = state.reduce((total, item) => total + item.price * item.qty, 0)
+  const calculateTotalAmount = () => {
+    return state.reduce((total, item) => {
+      const itemPrice = parseFloat(item.price.replace(/[^\d.-]/g, ''))
+      return total + itemPrice * item.qty
+    }, 0) / 10
+  }
+  
   const totalItems = state.reduce((total, item) => total + item.qty, 0)
 
   const handleCheckout = async (e) => {
@@ -47,14 +53,14 @@ export default function CartContent({ state, addItem, removeItem }) {
               <div className="card-body">
                 <ul className="list-group list-group-flush">
                   <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 pb-0">
-                    Products ({totalItems})<span>${Math.round(subtotal)}</span>
+                    Products ({totalItems})<span>${(calculateTotalAmount() / 10).toFixed(2)}</span>
                   </li>
                   <li className="list-group-item d-flex justify-content-between align-items-center border-0 px-0 mb-3">
                     <div>
                       <strong>Total amount</strong>
                     </div>
                     <span>
-                      <strong>${Math.round(subtotal)}</strong>
+                      <strong>${(calculateTotalAmount() / 10).toFixed(2)}</strong>
                     </span>
                   </li>
                 </ul>
