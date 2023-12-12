@@ -27,17 +27,17 @@ export default function CartItem({ item, addItem, removeItem }) {
         <div className="col-lg-4 col-md-6">
           <div className="d-flex mb-4" style={{ maxWidth: '300px' }}>
             <button
-              className="btn px-3"
+              className="text-black px-3 py-1 rounded-l"
               onClick={() => removeItem(item)}
             >
-              <i className="fas fa-minus"></i>
+              &#8722;
             </button>
             <p className="mx-5">{item.qty}</p>
             <button
-              className="btn px-3"
+              className="text-black px-3 py-1 rounded-l"
               onClick={() => addItem(item)}
             >
-              <i className="fas fa-plus"></i>
+              &#43;
             </button>
           </div>
           <p className="text-start text-md-center">
