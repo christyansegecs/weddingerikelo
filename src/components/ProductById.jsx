@@ -29,6 +29,7 @@ export default function ProductById( params ) {
             description: response.description,
             imageUrl: response.images,
             category: response.category || null,
+            priceId: price.id,
             price: new Intl.NumberFormat('pt-BR', {
               style: 'currency',
               currency: 'BRL'
