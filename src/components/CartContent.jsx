@@ -21,7 +21,7 @@ export default function CartContent({ state, addItem, removeItem }) {
     setIsCreatingCheckoutSession(true)
     
     const lineItems = state.map((item) => ({
-      price: item.priceId
+      price: item.priceId,
       quantity: item.qty
     }))
     
